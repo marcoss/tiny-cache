@@ -1,0 +1,10 @@
+load("@rules_kotlin//kotlin:jvm.bzl", "kt_jvm_binary")
+
+kt_jvm_binary(
+    name = "tinycache",
+    srcs = [
+        "TinyCache.kt",
+    ],
+    main_class = "tinycache.TinyCacheKt",
+    deps = [],
+)
