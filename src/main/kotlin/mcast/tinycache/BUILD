@@ -6,5 +6,8 @@ kt_jvm_binary(
         "TinyCache.kt",
     ],
     main_class = "tinycache.TinyCacheKt",
-    deps = [],
+    deps = [
+        "@maven//:io_ktor_ktor_server_core_jvm",
+        "@maven//:io_ktor_ktor_server_netty_jvm",
+    ],
 )

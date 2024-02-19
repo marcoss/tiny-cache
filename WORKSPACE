@@ -1,5 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+KTOR_VERSION = "2.3.8"
+
 # --------------------------------------------------------------
 # rules_jvm_external
 # --------------------------------------------------------------
@@ -26,14 +28,17 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = [
+        "io.ktor:ktor-server-core-jvm:%s" % KTOR_VERSION,
+        "io.ktor:ktor-server-netty-jvm:%s" % KTOR_VERSION,
         # "junit:junit:5.10.2",
     ],
     fetch_sources = True,
     repositories = [
         "https://maven.google.com",
+        "https://repo.maven.apache.org/maven2",
         "https://repo1.maven.org/maven2",
     ],
-    strict_visibility = True,
+    strict_visibility = False,
 )
 
 # --------------------------------------------------------------

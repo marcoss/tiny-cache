@@ -2,4 +2,5 @@
 /bazel-*
 bin
 .eclipse
+.vscode
 
