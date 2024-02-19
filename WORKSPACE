@@ -38,7 +38,7 @@ maven_install(
         "https://repo.maven.apache.org/maven2",
         "https://repo1.maven.org/maven2",
     ],
-    strict_visibility = False,
+    strict_visibility = True,
 )
 
 # --------------------------------------------------------------
