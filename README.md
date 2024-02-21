@@ -4,8 +4,15 @@
 A simple and tiny cache service written in Kotlin and deployed with Kubernetes.
 
 ## Run
+
+### Start service
 ```
 bazel run //src/main/kotlin/mcast/tinycache
+```
+
+### Start service with capacity of 10
+```
+bazel run //src/main/kotlin/mcast/tinycache -- 10
 ```
 
 ### Get

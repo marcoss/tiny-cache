@@ -11,18 +11,22 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
 
-fun main() {
-    embeddedServer(Netty, port = 8080) { module() }.start(wait = true)
+const val DEFAULT_CACHE_CAPACITY = 100
+
+fun main(args: Array<String>) {
+    val cacheCapacity = args.getOrNull(0)?.toIntOrNull() ?: DEFAULT_CACHE_CAPACITY
+
+    embeddedServer(Netty, port = 8080) { module(cacheCapacity) }.start(wait = true)
 }
 
 @Serializable data class CacheRequest(val key: String, val value: String)
 
-fun Application.module() {
-    log.info("Starting server...")
+fun Application.module(cacheCapacity: Int) {
+    log.info("Starting server with capacity of ${cacheCapacity}...")
 
     install(ContentNegotiation) { json() }
 
-    val cache = TinyCache<String, String>(100)
+    val cache = TinyCache<String, String>(cacheCapacity)
 
     routing {
         route("/api/v1/tinycache") {
