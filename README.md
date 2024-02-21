@@ -1,7 +1,7 @@
 # tiny-cache
 
 ## Info
-A simple and tiny cache service written in Kotlin and deployed with Kubernetes.
+A simple and tiny cache service written in Kotlin ~~and deployed with Kubernetes~~.
 
 ## Run
 
