@@ -2,6 +2,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 KTOR_VERSION = "2.3.8"
 
+KOTLINX_SERIALIZATION_VERSION = "1.6.0"
+
+LOGBACK_VERSION = "1.5.0"
+
 # --------------------------------------------------------------
 # rules_jvm_external
 # --------------------------------------------------------------
@@ -28,7 +32,11 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = [
+        "ch.qos.logback:logback-classic:%s" % LOGBACK_VERSION,
         "io.ktor:ktor-server-core-jvm:%s" % KTOR_VERSION,
+        "io.ktor:ktor-server-content-negotiation-jvm:%s" % KTOR_VERSION,
+        "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:%s" % KOTLINX_SERIALIZATION_VERSION,
+        "io.ktor:ktor-serialization-kotlinx-json-jvm:%s" % KTOR_VERSION,
         "io.ktor:ktor-server-netty-jvm:%s" % KTOR_VERSION,
         # "junit:junit:5.10.2",
     ],
