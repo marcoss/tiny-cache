@@ -11,14 +11,13 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 const val DEFAULT_CACHE_CAPACITY = 100
+const val BASE_API_ROUTE = "/api/v1/tinycache"
 
 fun main(args: Array<String>) {
     val cacheCapacity = args.getOrNull(0)?.toIntOrNull() ?: DEFAULT_CACHE_CAPACITY
 
     embeddedServer(Netty, port = 8080) { module(cacheCapacity) }.start(wait = true)
 }
-
-// @Serializable data class CacheRequest(val key: String, val value: String)
 
 fun Application.module(cacheCapacity: Int) {
     log.info("Starting server with capacity of ${cacheCapacity}...")
@@ -28,7 +27,7 @@ fun Application.module(cacheCapacity: Int) {
     val cache = TinyCache<String, String>(cacheCapacity)
 
     routing {
-        route("/api/v1/tinycache") {
+        route(BASE_API_ROUTE) {
             put {
                 try {
                     val payload = call.receive<CacheRequest>()
