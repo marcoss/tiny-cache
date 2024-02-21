@@ -9,7 +9,6 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 
 const val DEFAULT_CACHE_CAPACITY = 100
 
@@ -19,7 +18,7 @@ fun main(args: Array<String>) {
     embeddedServer(Netty, port = 8080) { module(cacheCapacity) }.start(wait = true)
 }
 
-@Serializable data class CacheRequest(val key: String, val value: String)
+// @Serializable data class CacheRequest(val key: String, val value: String)
 
 fun Application.module(cacheCapacity: Int) {
     log.info("Starting server with capacity of ${cacheCapacity}...")
