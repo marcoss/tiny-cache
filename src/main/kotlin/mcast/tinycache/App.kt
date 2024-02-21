@@ -1,6 +1,5 @@
 package tinycache
 
-// import io.ktor.util.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -16,6 +15,8 @@ fun main() {
     embeddedServer(Netty, port = 8080) { module() }.start(wait = true)
 }
 
+@Serializable data class CacheRequest(val key: String, val value: String)
+
 fun Application.module() {
     log.info("Starting server...")
 
@@ -23,20 +24,24 @@ fun Application.module() {
 
     val cache = TinyCache<String, String>(100)
 
-    @Serializable data class CacheRequest(val key: String, val value: String)
-
     routing {
         route("/api/v1/tinycache") {
             put {
-                val payload = call.receive<CacheRequest>()
+                try {
+                    val payload = call.receive<CacheRequest>()
 
-                call.application.environment.log.info(
-                        "cache put: ${payload.key} -> ${payload.value}"
-                )
+                    call.application.environment.log.info(
+                            "cache put: ${payload.key} -> ${payload.value}"
+                    )
 
-                cache.put(payload.key, payload.value)
+                    cache.put(payload.key, payload.value)
 
-                call.respond(HttpStatusCode.OK)
+                    call.respond(HttpStatusCode.OK)
+                } catch (e: Exception) {
+                    // TODO: Move to status page and reduce exception class scope
+                    call.application.environment.log.error("Failed to parse request: ", e)
+                    call.respond(HttpStatusCode.BadRequest)
+                }
             }
 
             get("/{key}") {
